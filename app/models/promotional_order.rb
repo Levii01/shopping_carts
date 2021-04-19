@@ -1,0 +1,2 @@
+class PromotionalOrder < ApplicationRecord
+end

@@ -10,10 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_001836) do
+ActiveRecord::Schema.define(version: 2021_04_19_003451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "code", null: false
@@ -21,6 +24,28 @@ ActiveRecord::Schema.define(version: 2021_04_19_001836) do
     t.decimal "amount", precision: 13, scale: 2, default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_products_on_code"
   end
 
+  create_table "promotional_items", force: :cascade do |t|
+    t.string "code"
+    t.bigint "product_id", null: false
+    t.decimal "price", precision: 13, scale: 2, default: "0.0", null: false
+    t.integer "activation_amount"
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_promotional_items_on_product_id"
+  end
+
+  create_table "promotional_orders", force: :cascade do |t|
+    t.string "code"
+    t.integer "percentage"
+    t.decimal "activation_price", precision: 13, scale: 2, default: "0.0", null: false
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "promotional_items", "products"
 end
