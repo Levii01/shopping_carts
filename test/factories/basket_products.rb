@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :basket_product do
-    product { nil }
-    basket { nil }
+    product
+    basket
   end
 end

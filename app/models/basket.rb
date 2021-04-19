@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Basket < ApplicationRecord
-  has_many :basket_products
+  has_many :basket_products, dependent: :destroy
   has_many :products, through: :basket_products
 
   def sum_final_prices
